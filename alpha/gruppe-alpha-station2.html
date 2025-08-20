@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="style.css" />
 <link rel="stylesheet" href="../style-alpha.css">
 </head>
-<body>
+<body>`r`n<div class="content">
   <div class="container">
     <div class="header">
       <div class="led"></div>
@@ -59,7 +59,7 @@ function checkAnswer() {
   /* Canvas liegt hinter dem Content */
   #matrix{position:fixed; inset:0; z-index:-1; pointer-events:none; background:transparent}
 </style>
-<canvas id="matrix"></canvas>
+</div>`r`n<canvas id="matrix"></canvas>
 <script>
 (function(){
   const canvas=document.getElementById('matrix'), ctx=canvas.getContext('2d');
@@ -86,6 +86,8 @@ function checkAnswer() {
 </script>
 </body>
 </html>
+
+
 
 
 
