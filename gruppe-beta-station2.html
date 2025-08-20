@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Station 2 - Gruppe Beta</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="led"></div>
+      <h1>Operation Reconnect</h1>
+    </div>
+
+    <div class="card">
+      <h2>Fallout-Boten - Station 2 - Gruppe Beta</h2>
+      <p class="small">Gruppe: <span class="code">Beta</span> &middot; Station: <span class="code">2</span></p>
+    </div>
+
+    <div class="card">
+      <h3>Hinweis / Raetsel (Platzhalter)</h3>
+      <p>Die großen Mauern stehen noch, aber sie sind voller Risse. Dusty Gear sagt: „Hinter den Steinen ist ein alter Generator. Wir müssen ihn sichern.“ In der Asche findest du, was zählt.</p>
+
+      <p class="notice">Tipp: Nutze klare, kurze Saetze. Beispiel: "Zaehle die Boegen der Bruecke und multipliziere sie mit der Anzahl der Laternen."</p>
+    </div>
+
+    <div>
+    <p class="small">
+        Bitte Zahl hier eingeben: 
+        <input type="number" id="group-number" placeholder="XX">
+    </p>
+    <button onclick="checkAnswer()">Absenden</button>
+</div>
+
+<script>
+function checkAnswer() {
+    const userInput = document.getElementById('group-number').value;
+    const correctNumber = 42; // hier die richtige Zahl eintragen
+
+    if (parseInt(userInput) === correctNumber) {
+        // zur nächsten Seite weiterleiten
+        window.location.href = "gruppe-beta-start.html"; // hier deine nächste HTML-Seite eintragen
+    } else {
+        alert("Falsche Zahl, bitte nochmal versuchen!");
+    }
+}
+</script>
+
+
+    <div class="footer">
+      <p>© Geocache Wetzlar · Hacker-Theme · Nur fuer Bildungszwecke</p>
+    </div>
+  </div>
+</body>
+</html>
