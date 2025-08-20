@@ -1,0 +1,15 @@
+﻿/* ALPHA – Matrix Look (ohne JS, sofort sichtbar) */
+:root { --fg:#00ff5e; --bg:#000; --muted:#0a2; }
+html,body{height:100%}
+body{
+  margin:0; background: var(--bg);
+  color:var(--fg); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  /* angedeuteter „Digital Rain“ via animiertem Linienmuster */
+  background-image:
+    repeating-linear-gradient(180deg, rgba(0,255,94,0.08) 0 2px, transparent 2px 30px),
+    radial-gradient(ellipse at top, rgba(0,255,94,0.06), transparent 60%);
+  animation: rain 8s linear infinite;
+}
+@keyframes rain { to { background-position: 0 600px, 0 0; } }
+a{color:var(--fg)} button,input{background:#021; color:var(--fg); border:1px solid var(--muted); padding:.5rem 1rem; border-radius:6px}
+h1,h2{color:var(--fg)}
