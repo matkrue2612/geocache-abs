@@ -32,3 +32,7 @@ body{ --rain:"
 01010100110101010100011010
 00110101001011010010100101"; }
 @keyframes matrixRain { to { transform: translateY(55%); } }
+/* --- Matrix Canvas Layering Fix --- */
+#matrix{position:fixed; inset:0; z-index:0; pointer-events:none; background:transparent}
+body > *{position:relative; z-index:1}
+body::before{z-index:-1 !important;}
