@@ -14,7 +14,8 @@
     </div>
 
     <div class="card">
-      <h2>Station 1 - Gruppe Alpha</h2>
+      <h2>50.555769689207494, 8.502021730798715
+ - Gruppe Alpha</h2>
       <p class="small">Gruppe: <span class="code">Alpha</span> &middot; Station: <span class="code">1</span></p>
     </div>
 
@@ -25,11 +26,30 @@
 
     </div>
 
-    <div class="card">
-      <h3>Codefragment (Platzhalter)</h3>
-      <p class="mono">Code: <span class="code">XX</span></p>
-      <p class="small">Ersetze "XX" spaeter durch die korrekte Zahl, die die Gruppe hier ermitteln soll.</p>
-    </div>
+<div>
+    <p class="small">
+        Bitte Zahl hier eingeben: 
+        <input type="number" id="group-number" placeholder="XX">
+    </p>
+    <button onclick="checkAnswer()">Absenden</button>
+</div>
+
+<script>
+function checkAnswer() {
+    const userInput = document.getElementById('group-number').value;
+    const correctNumber = 42; // hier die richtige Zahl eintragen
+
+    if (parseInt(userInput) === correctNumber) {
+        // zur nächsten Seite weiterleiten
+        window.location.href = "gruppe-alpha-station2.html"; // hier deine nächste HTML-Seite eintragen
+    } else {
+        alert("Falsche Zahl, bitte nochmal versuchen!");
+    }
+}
+</script>
+
+</div>
+
 
     <div class="card">
       <h3>Naechster Schritt</h3>
