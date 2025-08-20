@@ -8,14 +8,21 @@
 
 <script>
 const routes = {
-  "alpha-2025": "alpha/a3f7-start.html",
-  "beta-2025":  "beta/b91c-start.html",
-  "gamma-2025": "gamma/g44x-start.html"
+  "alpha-2025": { url: "alpha/a3f7-start.html", key: "alpha_ok" },
+  "beta-2025":  { url: "beta/b91c-start.html",  key: "beta_ok"  },
+  "gamma-2025": { url: "gamma/g44x-start.html", key: "gamma_ok" }
 };
+
 document.getElementById('go').onclick = () => {
   const v = (document.getElementById('code').value || "").trim().toLowerCase();
-  if (routes[v]) window.location.href = routes[v];
-  else alert("Code ungültig.");
+  const r = routes[v];
+  if (r) {
+    sessionStorage.setItem(r.key, "1");   // Freigabe für die Gruppe merken (Tab/Browser-Sitzung)
+    window.location.href = r.url;         // Weiterleiten
+  } else {
+    alert("Code ungültig.");
+  }
 };
 </script>
+
 <!-- rebuild 2025-08-20T18:23:50 -->
