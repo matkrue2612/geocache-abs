@@ -41,3 +41,8 @@ body::before{
 .content a {
   text-shadow: 0 0 6px #000;
 }
+/* --- Ultimate Click Fix --- */
+#matrix{ pointer-events:none !important; z-index:-1 !important; position:fixed !important; inset:0 !important; }
+body::before{ pointer-events:none !important; z-index:-1 !important; }
+.content, .content *{ pointer-events:auto !important; position:relative; z-index:10; }
+a, button{ pointer-events:auto !important; position:relative; z-index:20; }
