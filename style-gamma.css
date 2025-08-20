@@ -26,3 +26,15 @@ body::before{
   from { background-position: 0 0; }
   to   { background-position: 400px 1000px; }
 }
+.content {
+  background: rgba(255,255,255,0.85);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(255,122,0,0.4);
+}
+.content h1,
+.content h2,
+.content p,
+.content a {
+  text-shadow: 0 0 6px #fff;
+}
