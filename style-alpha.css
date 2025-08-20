@@ -36,3 +36,24 @@ body{ --rain:"
 #matrix{position:fixed; inset:0; z-index:0; pointer-events:none; background:transparent}
 body > *{position:relative; z-index:1}
 body::before{z-index:-1 !important;}
+/* Panel für besseren Kontrast */
+.content {
+  position: relative;
+  z-index: 2;             /* über dem Canvas */
+  background: rgba(0, 0, 0, 0.9); /* halbtransparentes Schwarz */
+  color: #00ff41;         /* Matrix-Grün */
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 800px;
+  margin: 2rem auto;
+  box-shadow: 0 0 20px rgba(0,255,65,0.6);
+}
+
+/* Links & Buttons */
+.content a, 
+.content button {
+  color: #00ff41;
+  text-shadow: 0 0 6px #00ff41;
+}
+
+
