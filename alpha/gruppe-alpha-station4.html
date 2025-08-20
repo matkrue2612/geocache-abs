@@ -55,7 +55,37 @@ function checkAnswer() {
       <p>Â© Geocache Wetzlar Â· Hacker-Theme Â· Nur fuer Bildungszwecke</p>
     </div>
   </div>
+<style>
+  /* Canvas liegt hinter dem Content */
+  #matrix{position:fixed; inset:0; z-index:-1; pointer-events:none; background:transparent}
+</style>
+<canvas id="matrix"></canvas>
+<script>
+(function(){
+  const canvas=document.getElementById('matrix'), ctx=canvas.getContext('2d');
+  let cols=0, drops=[];
+  function resize(){
+    canvas.width=window.innerWidth; canvas.height=window.innerHeight;
+    cols=Math.floor(canvas.width/14); drops=Array(cols).fill(0);
+  }
+  const glyphs='アカサタナハマヤラワ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  function draw(){
+    ctx.fillStyle='rgba(0,0,0,0.08)'; ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle='#00ff5e'; ctx.font='14px monospace';
+    for(let i=0;i<drops.length;i++){
+      const ch=glyphs[Math.floor(Math.random()*glyphs.length)];
+      ctx.fillText(ch, i*14, drops[i]*16);
+      if(drops[i]*16>canvas.height && Math.random()>0.975) drops[i]=0;
+      drops[i]++;
+    }
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize', resize);
+  resize(); draw();
+})();
+</script>
 </body>
 </html>
+
 
 
