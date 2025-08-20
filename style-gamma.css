@@ -1,13 +1,28 @@
-﻿/* GAMMA – DragonBall / Anime Look (Speedlines, warme Akzente) */
+﻿/* ========== GAMMA (DragonBall) ========== */
 :root { --fg:#ff7a00; --ink:#1b1b1b; --bg:#f7f7ff; --accent:#2b90ff; }
 html,body{height:100%}
 body{
-  margin:0; background: var(--bg); color:var(--ink);
-  font-family: "Kalam","Segoe UI",system-ui,Arial,sans-serif;
-  /* Speedline-Feeling */
-  background-image:
-    repeating-linear-gradient(120deg, rgba(43,144,255,0.08) 0 6px, transparent 6px 22px);
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family: ""Kalam"",""Segoe UI"",system-ui,Arial,sans-serif;
+  position:relative; overflow:hidden;
 }
-h1,h2{color:var(--fg)}
-a{color:var(--accent)}
+
+h1,h2{color:var(--fg)} a{color:var(--accent)}
 button,input{background:#fff; border:2px solid var(--fg); color:var(--ink); padding:.5rem 1rem; border-radius:10px}
+
+/* diagonale Speedlines als animiertes Overlay */
+body::before{
+  content:"";
+  position:fixed; inset:-20%;
+  background-image:
+    repeating-linear-gradient(120deg,
+      rgba(43,144,255,.18) 0 10px,
+      transparent 10px 30px);
+  animation: speedMove 3.2s linear infinite;
+  opacity:.55;
+}
+
+@keyframes speedMove{
+  from { background-position: 0 0; }
+  to   { background-position: 400px 1000px; }
+}
