@@ -1,51 +1,106 @@
-﻿<script>(function(){ if(sessionStorage.getItem("gamma_ok")!=="1"){ location.replace("../index.html"); } })();</script>
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="de">
 <head>
-<link rel="stylesheet" href="../style-gamma.css">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Start - Gruppe Gamma</title>
+  <!-- Gleiches Design wie Alpha -->
+  <link rel="stylesheet" href="../style-alpha.css" />
   <link rel="stylesheet" href="style.css" />
-<link rel="stylesheet" href="../style-gamma.css">
+  <style>
+    body { margin: 0; }
+    /* Content sicher über dem Canvas */
+    .content { position: relative; z-index: 1; }
+    /* Matrix im Hintergrund, blockiert keine Klicks */
+    #matrix { position: fixed; inset: 0; z-index: -1; pointer-events: none; background: transparent; }
+  </style>
+  <script>
+    // Zugangsgate für Gamma
+    (function(){
+      if (sessionStorage.getItem("gamma_ok") !== "1") {
+        location.replace("../index.html");
+      }
+    })();
+  </script>
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <div class="led"></div>
-      <h1>Operation Reconnect</h1>
-    </div>
+  <!-- Matrix-Hintergrund -->
+  <canvas id="matrix"></canvas>
 
-    <div class="card">
-      <h2>Start - Z-KÃ¤mpfer</h2>
-      <p class="small">Gruppe: <span class="code">Gamma</span> &middot; Station: <span class="code">1</span></p>
-    </div>
+  <div class="content">
+    <div class="container">
+      <div class="header">
+        <div class="led"></div>
+        <h1>Operation Reconnect</h1>
+      </div>
 
-    <div class="card">
-      <h3>Hinweis / Raetsel (Platzhalter)</h3>
-      <p>Am Horizont geht die Sonne auf. Sensei Kairo steht vor euch, lÃ¤chelt und sagt: â€žEin mÃ¤chtiger Quanten-Virus bedroht unsere Stadt. Du bist auserwÃ¤hlt, ihn zu besiegen. Findet die fÃ¼nf Orte in Wetzlar. Dort sind QR-Codes versteckt. Scannt sie und sammle die Teile des Schutzmoduls.â€œ Die Energie flieÃŸt, wenn der Geist klar ist.</p>
+      <div class="card">
+        <h2>Start – Avengers-Netzwerk</h2>
+        <p class="small">Gruppe: <span class="code">Gamma</span> &middot; Station: <span class="code">1</span></p>
+      </div>
 
-      <p class="notice">Tipp: Nutze klare, kurze Saetze. Beispiel: "Zaehle die Boegen der Bruecke und multipliziere sie mit der Anzahl der Laternen."</p>
-    </div>
+      <div class="card">
+        <h3>Hinweis / Rätsel (Platzhalter)</h3>
+        <p>
+          Die Sensoren schlagen aus. „Wir haben mehrere Störfelder in Wetzlar“, funkt Jarvis.
+          „Finde die fünf Punkte, scanne die QR-Codes und sammle die Fragmente des Reboot-Schlüssels.“
+          Nur zusammen bringen wir das Netz zurück.
+        </p>
+        <p class="notice">Tipp: Nutze klare, kurze Sätze. Beispiel:
+          „Zähle die Symbole am Schild und addiere die sichtbaren Antennen.“</p>
+      </div>
 
-    <div class="card">
-      <h3>Codefragment (Platzhalter)</h3>
-      <p class="mono">Code: <span class="code">XX</span></p>
-      <p class="small">Ersetze "XX" spaeter durch die korrekte Zahl, die die Gruppe hier ermitteln soll.</p>
-    </div>
+      <div class="card">
+        <h3>Codefragment (Platzhalter)</h3>
+        <p class="mono">Code: <span class="code">XX</span></p>
+        <p class="small">Ersetze „XX“ später durch die korrekte Zahl, die die Gruppe hier ermitteln soll.</p>
+      </div>
 
-    <div class="card">
-      <h3>Naechster Schritt</h3>
-      <p>Scanne den naechsten QR-Code oder rufe den naechsten Link auf, wenn ihr das Codefragment gefunden habt.</p>
-      <a class="btn" href="gruppe-gamma-station1.html"</a>
-      <p class="small">Passe den Button-Link oben an, sobald die finale Reihenfolge feststeht.</p>
-    </div>
+      <div class="card">
+        <h3>Nächster Schritt</h3>
+        <p>Scanne den nächsten QR-Code oder ruft den Link auf, wenn ihr das Codefragment gefunden habt.</p>
+        <a class="btn" href="gruppe-gamma-station1.html">Weiter zu Station 1</a>
+        <p class="small">Passe den Button-Link oben an, sobald die finale Reihenfolge feststeht.</p>
+      </div>
 
-    <div class="footer">
-      <p>Â© Geocache Wetzlar Â· Hacker-Theme Â· Nur fuer Bildungszwecke</p>
+      <div class="footer">
+        <p>© Geocache Wetzlar · Hacker-Theme · Nur für Bildungszwecke</p>
+      </div>
     </div>
   </div>
+
+  <script>
+    // Matrix-Regen im Hintergrund
+    (function(){
+      const canvas = document.getElementById('matrix');
+      const ctx = canvas.getContext('2d');
+      let cols = 0, drops = [];
+      const glyphs = 'アカサタナハマヤラワ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+      function resize(){
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        cols = Math.floor(canvas.width / 14);
+        drops = Array(cols).fill(0);
+      }
+
+      function draw(){
+        ctx.fillStyle = 'rgba(0,0,0,0.08)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#00ff5e';
+        ctx.font = '14px monospace';
+        for (let i = 0; i < drops.length; i++) {
+          const ch = glyphs[Math.floor(Math.random() * glyphs.length)];
+          ctx.fillText(ch, i * 14, drops[i] * 16);
+          if (drops[i] * 16 > canvas.height && Math.random() > 0.975) drops[i] = 0;
+          drops[i]++;
+        }
+        requestAnimationFrame(draw);
+      }
+
+      window.addEventListener('resize', resize);
+      resize(); draw();
+    })();
+  </script>
 </body>
 </html>
-
-

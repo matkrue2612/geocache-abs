@@ -1,61 +1,105 @@
-﻿<script>(function(){ if(sessionStorage.getItem("beta_ok")!=="1"){ location.replace("../index.html"); } })();</script>
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="de">
 <head>
-<link rel="stylesheet" href="../style-beta.css">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Station 4 - Gruppe Beta</title>
+  <link rel="stylesheet" href="../style-alpha.css" />
   <link rel="stylesheet" href="style.css" />
-<link rel="stylesheet" href="../style-beta.css">
+  <style>
+    body { margin: 0; }
+    .content { position: relative; z-index: 1; }
+    #matrix { position: fixed; inset: 0; z-index: -1; pointer-events: none; background: transparent; }
+    .field-row { display: flex; gap: .5rem; align-items: center; flex-wrap: wrap; }
+    .error { color: #c0392b; font-size: .9rem; margin-top: .25rem; display: none; }
+    .hidden { display: none; }
+  </style>
+  <script>
+    (function(){ if (sessionStorage.getItem("beta_ok") !== "1") location.replace("../index.html"); })();
+  </script>
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <div class="led"></div>
-      <h1>Operation Reconnect</h1>
-    </div>
+  <canvas id="matrix"></canvas>
 
-    <div class="card">
-      <h2>Fallout-Boten - Station 4 - Gruppe Beta</h2>
-      <p class="small">Gruppe: <span class="code">Beta</span> &middot; Station: <span class="code">4</span></p>
-    </div>
+  <div class="content">
+    <div class="container">
+      <div class="header">
+        <div class="led"></div>
+        <h1>Operation Reconnect</h1>
+      </div>
 
-    <div class="card">
-      <h3>Hinweis / Raetsel (Platzhalter)</h3>
-      <p>Unter der BrÃ¼cke rauscht das Wasser. Alte Kabel hÃ¤ngen lose ins Flussbett. Dusty Gear sagt: â€žHier lÃ¤uft noch ein alter Stromkreis. Wir mÃ¼ssen ihn prÃ¼fen.â€œ In der Asche findest du, was zÃ¤hlt.</p>
+      <div class="card">
+        <h2>Fallout-Boten – Station 4 – Gruppe Beta</h2>
+        <p class="small">Gruppe: <span class="code">Beta</span> &middot; Station: <span class="code">4</span></p>
+      </div>
 
-      <p class="notice">Tipp: Nutze klare, kurze Saetze. Beispiel: "Zaehle die Boegen der Bruecke und multipliziere sie mit der Anzahl der Laternen."</p>
-    </div>
+      <div class="card">
+        <h3>Hinweis / Rätsel (Platzhalter)</h3>
+        <p>Zwischen den Mauerresten summt ein alter Knotenpunkt. „Stell die richtige Spannung ein“, knistert Dusty Gear.</p>
+      </div>
 
-<div>
-    <p class="small">
-        Bitte Zahl hier eingeben: 
-        <input type="number" id="group-number" placeholder="XX">
-    </p>
-    <button onclick="checkAnswer()">Absenden</button>
-</div>
+      <div class="card">
+        <h3>Codeeingabe</h3>
+        <form id="answer-form" novalidate>
+          <div class="field-row">
+            <label for="answer" class="small">Bitte Zahl eingeben:</label>
+            <input type="number" id="answer" name="answer" placeholder="XX" inputmode="numeric" required />
+            <button type="submit" class="btn">Absenden</button>
+          </div>
+          <div id="error" class="error">Falsche Zahl, bitte nochmal versuchen!</div>
+        </form>
+        <p id="success" class="small hidden">Richtig! Ihr werdet weitergeleitet…</p>
+      </div>
 
-<script>
-function checkAnswer() {
-    const userInput = document.getElementById('group-number').value;
-    const correctNumber = 42; // hier die richtige Zahl eintragen
+      <div class="card">
+        <h3>Nächster Schritt (Fallback-Link)</h3>
+        <p class="small">Falls die automatische Weiterleitung nicht greift:</p>
+        <a class="btn" href="gruppe-beta-station5.html" id="fallback-link">Weiter zu Station 5</a>
+      </div>
 
-    if (parseInt(userInput) === correctNumber) {
-        // zur nÃ¤chsten Seite weiterleiten
-        window.location.href = "gruppe-beta-start.html"; // hier deine nÃ¤chste HTML-Seite eintragen
-    } else {
-        alert("Falsche Zahl, bitte nochmal versuchen!");
-    }
-}
-</script>
-
-
-    <div class="footer">
-      <p>Â© Geocache Wetzlar Â· Hacker-Theme Â· Nur fuer Bildungszwecke</p>
+      <div class="footer">
+        <p>© Geocache Wetzlar · Hacker-Theme · Nur für Bildungszwecke</p>
+      </div>
     </div>
   </div>
+
+  <script>
+    (function () {
+      const CORRECT_NUMBER = 42;  /* <<< HIER richtige Lösung eintragen */
+      const NEXT_URL = document.getElementById('fallback-link').href;
+
+      const form = document.getElementById('answer-form');
+      const input = document.getElementById('answer');
+      const error = document.getElementById('error');
+      const success = document.getElementById('success');
+
+      const show = el => el && (el.style.display = '');
+      const hide = el => el && (el.style.display = 'none');
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        hide(error); hide(success);
+
+        const val = Number.parseInt((input.value || '').trim(), 10);
+        if (Number.isNaN(val)) { error.textContent = "Bitte eine Zahl eingeben."; show(error); input.focus(); return; }
+
+        if (val === CORRECT_NUMBER) { show(success); setTimeout(() => { window.location.href = NEXT_URL; }, 150); }
+        else { error.textContent = "Falsche Zahl, bitte nochmal versuchen!"; show(error); input.select(); input.focus(); }
+      });
+    })();
+  </script>
+
+  <script>
+    (function(){
+      const c = document.getElementById('matrix'), x = c.getContext('2d');
+      let cols=0, drops=[];
+      const g='アカサタナハマヤラワ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      function resize(){ c.width=innerWidth; c.height=innerHeight; cols=Math.floor(c.width/14); drops=Array(cols).fill(0); }
+      function draw(){ x.fillStyle='rgba(0,0,0,0.08)'; x.fillRect(0,0,c.width,c.height); x.fillStyle='#00ff5e'; x.font='14px monospace';
+        for(let i=0;i<drops.length;i++){ const ch=g[Math.floor(Math.random()*g.length)]; x.fillText(ch, i*14, drops[i]*16);
+          if(drops[i]*16>c.height && Math.random()>0.975) drops[i]=0; drops[i]++; } requestAnimationFrame(draw); }
+      addEventListener('resize', resize); resize(); draw();
+    })();
+  </script>
 </body>
 </html>
-
-

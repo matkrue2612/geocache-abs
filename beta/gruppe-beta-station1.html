@@ -1,60 +1,151 @@
-﻿<script>(function(){ if(sessionStorage.getItem("beta_ok")!=="1"){ location.replace("../index.html"); } })();</script>
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="de">
 <head>
-<link rel="stylesheet" href="../style-beta.css">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Station 1 - Gruppe Beta</title>
+  <!-- Alpha-Design verwenden -->
+  <link rel="stylesheet" href="../style-alpha.css" />
   <link rel="stylesheet" href="style.css" />
-<link rel="stylesheet" href="../style-beta.css">
+  <style>
+    body { margin: 0; }
+    /* Content sicher über dem Canvas platzieren */
+    .content { position: relative; z-index: 1; }
+    /* Matrix im Hintergrund, blockiert keine Klicks */
+    #matrix { position: fixed; inset: 0; z-index: -1; pointer-events: none; background: transparent; }
+    /* kleine UX-Details */
+    .field-row { display: flex; gap: .5rem; align-items: center; flex-wrap: wrap; }
+    .error { color: #c0392b; font-size: .9rem; margin-top: .25rem; display: none; }
+    .hidden { display: none; }
+  </style>
+  <script>
+    (function(){
+      if (sessionStorage.getItem("beta_ok") !== "1") {
+        location.replace("../index.html");
+      }
+    })();
+  </script>
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <div class="led"></div>
-      <h1>Operation Reconnect</h1>
-    </div>
+  <!-- Matrix-Hintergrund -->
+  <canvas id="matrix"></canvas>
 
-    <div class="card">
-      <h2>Fallout-Boten - Station 1 - Gruppe Beta</h2>
-      <p class="small">Gruppe: <span class="code">Beta</span> &middot; Station: <span class="code">1</span></p>
-    </div>
+  <div class="content">
+    <div class="container">
+      <div class="header">
+        <div class="led"></div>
+        <h1>Operation Reconnect</h1>
+      </div>
 
-    <div class="card">
-      <h3>Hinweis / Raetsel (Platzhalter)</h3>
-      <p>Zwischen den Blumen wachsen alte Metallteile aus der Erde. Dusty Gear sagt: â€žHier ist ein versteckter Stromknoten. Hol dir die Energie, bevor sie verloren geht.â€œ In der Asche findest du, was zÃ¤hlt.</p>
+      <div class="card">
+        <h2>Fallout-Boten – Station 1 – Gruppe Beta</h2>
+        <p class="small">Gruppe: <span class="code">Beta</span> &middot; Station: <span class="code">1</span></p>
+      </div>
 
-      <p class="notice">Tipp: Nutze klare, kurze Saetze. Beispiel: "Zaehle die Boegen der Bruecke und multipliziere sie mit der Anzahl der Laternen."</p>
-    </div>
+      <div class="card">
+        <h3>Hinweis / Rätsel (Platzhalter)</h3>
+        <p>
+          Zwischen den Blumen wachsen alte Metallteile aus der Erde. Dusty Gear sagt:
+          „Hier ist ein versteckter Stromknoten. Hol dir die Energie, bevor sie verloren geht.“
+          In der Asche findest du, was zählt.
+        </p>
+        <p class="notice">Tipp: Nutze klare, kurze Sätze. Beispiel:
+          „Zähle die Bögen der Brücke und multipliziere sie mit der Anzahl der Laternen.“</p>
+      </div>
 
-<div>
-    <p class="small">
-        Bitte Zahl hier eingeben: 
-        <input type="number" id="group-number" placeholder="XX">
-    </p>
-    <button onclick="checkAnswer()">Absenden</button>
-</div>
+      <div class="card">
+        <h3>Codeeingabe</h3>
+        <form id="answer-form" novalidate>
+          <div class="field-row">
+            <label for="answer" class="small">Bitte Zahl eingeben:</label>
+            <input type="number" id="answer" name="answer" placeholder="XX" inputmode="numeric" required />
+            <button type="submit" class="btn">Absenden</button>
+          </div>
+          <div id="error" class="error">Falsche Zahl, bitte nochmal versuchen!</div>
+        </form>
+        <p id="success" class="small hidden">Richtig! Ihr werdet weitergeleitet…</p>
+      </div>
 
-<script>
-function checkAnswer() {
-    const userInput = document.getElementById('group-number').value;
-    const correctNumber = 42; // hier die richtige Zahl eintragen
+      <div class="card">
+        <h3>Nächster Schritt (Fallback-Link)</h3>
+        <p class="small">Falls die automatische Weiterleitung nicht greift:</p>
+        <a class="btn" href="gruppe-beta-station2.html" id="fallback-link">Weiter zu Station 2</a>
+      </div>
 
-    if (parseInt(userInput) === correctNumber) {
-        // zur nÃ¤chsten Seite weiterleiten
-        window.location.href = "gruppe-beta-start.html"; // hier deine nÃ¤chste HTML-Seite eintragen
-    } else {
-        alert("Falsche Zahl, bitte nochmal versuchen!");
-    }
-}
-</script>
-
-    <div class="footer">
-      <p>Â© Geocache Wetzlar Â· Hacker-Theme Â· Nur fuer Bildungszwecke</p>
+      <div class="footer">
+        <p>© Geocache Wetzlar · Hacker-Theme · Nur für Bildungszwecke</p>
+      </div>
     </div>
   </div>
+
+  <script>
+    // Prüflogik: richtige Lösung -> weiter zu Station 2
+    (function () {
+      const CORRECT_NUMBER = 42;                        /* <<< HIER eure echte Lösung eintragen */
+      const NEXT_URL = document.getElementById('fallback-link').href; // nimmt exakt den Fallback-Link
+
+      const form = document.getElementById('answer-form');
+      const input = document.getElementById('answer');
+      const error = document.getElementById('error');
+      const success = document.getElementById('success');
+
+      const show = el => el && (el.style.display = '');
+      const hide = el => el && (el.style.display = 'none');
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        hide(error); hide(success);
+
+        const raw = (input.value || '').trim();
+        const val = Number.parseInt(raw, 10);
+        if (Number.isNaN(val)) {
+          error.textContent = "Bitte eine Zahl eingeben.";
+          show(error); input.focus(); return;
+        }
+
+        if (val === CORRECT_NUMBER) {
+          show(success);
+          setTimeout(() => { window.location.href = NEXT_URL; }, 150);
+        } else {
+          error.textContent = "Falsche Zahl, bitte nochmal versuchen!";
+          show(error); input.select(); input.focus();
+        }
+      });
+    })();
+  </script>
+
+  <script>
+    // Matrix-Regen im Hintergrund
+    (function(){
+      const canvas = document.getElementById('matrix');
+      const ctx = canvas.getContext('2d');
+      let cols = 0, drops = [];
+      const glyphs = 'アカサタナハマヤラワ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+      function resize(){
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        cols = Math.floor(canvas.width / 14);
+        drops = Array(cols).fill(0);
+      }
+
+      function draw(){
+        ctx.fillStyle = 'rgba(0,0,0,0.08)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#00ff5e';
+        ctx.font = '14px monospace';
+        for (let i = 0; i < drops.length; i++) {
+          const ch = glyphs[Math.floor(Math.random() * glyphs.length)];
+          ctx.fillText(ch, i * 14, drops[i] * 16);
+          if (drops[i] * 16 > canvas.height && Math.random() > 0.975) drops[i] = 0;
+          drops[i]++;
+        }
+        requestAnimationFrame(draw);
+      }
+
+      window.addEventListener('resize', resize);
+      resize(); draw();
+    })();
+  </script>
 </body>
 </html>
-
-
