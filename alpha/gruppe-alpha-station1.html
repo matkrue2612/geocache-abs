@@ -13,13 +13,7 @@
     /* Canvas liegt hinter dem Content und blockiert keine Klicks */
     #matrix { position: fixed; inset: 0; z-index: -1; pointer-events: none; background: transparent; }
   </style>
-  <script>
-    (function () {
-      if (sessionStorage.getItem("alpha_ok") !== "1") {
-        location.replace("../index.html");
-      }
-    })();
-  </script>
+ 
 </head>
 <body>
   <canvas id="matrix"></canvas>
@@ -132,6 +126,7 @@
   </script>
 </body>
 </html>
+
 
 
 

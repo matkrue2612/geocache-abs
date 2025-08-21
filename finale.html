@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Finale – Netzwerk-Reboot</title>
+  <title>Finale â€“ Netzwerk-Reboot</title>
   <link rel="stylesheet" href="style.css" />
   <style>
     .input-field {
@@ -37,18 +37,18 @@
   <div class="container">
     <div class="header">
       <div class="led"></div>
-      <h1>⚡ Netzwerk-Reboot – Finale Mission ⚡</h1>
+      <h1>âš¡ Netzwerk-Reboot â€“ Finale Mission âš¡</h1>
     </div>
 
     <div class="card">
       <h2>Endspiel</h2>
-      <p>Ihr habt es fast geschafft! Die Matrix-Hacker, die Fallout-Überlebenden und die Avengers stehen gemeinsam vor dem letzten Firewall-Tor.</p>
-      <p>Nur wenn ihr alle <strong>drei</strong> Codefragmente richtig eingebt, könnt ihr den zentralen Server starten und das Internet wiederherstellen.</p>
+      <p>Ihr habt es fast geschafft! Die Matrix-Hacker, die Fallout-Ãœberlebenden und die Avengers stehen gemeinsam vor dem letzten Firewall-Tor.</p>
+      <p>Nur wenn ihr alle <strong>drei</strong> Codefragmente richtig eingebt, kÃ¶nnt ihr den zentralen Server starten und das Internet wiederherstellen.</p>
     </div>
 
     <div class="card">
       <h3>Gibt eure Codefragmente ein</h3>
-      <p>Die Reihenfolge ist egal – aber alle drei müssen stimmen!</p>
+      <p>Die Reihenfolge ist egal â€“ aber alle drei mÃ¼ssen stimmen!</p>
       <input id="code1" class="input-field" maxlength="4" placeholder="Alpha">
       <input id="code2" class="input-field" maxlength="4" placeholder="Beta">
       <input id="code3" class="input-field" maxlength="4" placeholder="Gamma">
@@ -58,7 +58,7 @@
     </div>
 
     <div class="footer">
-      <p>© Geocache Wetzlar · Finale Mission · Nur für Bildungszwecke</p>
+      <p>Â© Geocache Wetzlar Â· Finale Mission Â· Nur fÃ¼r Bildungszwecke</p>
     </div>
   </div>
 
@@ -68,13 +68,14 @@
       const c2 = document.getElementById('code2').value.trim();
       const c3 = document.getElementById('code3').value.trim();
 
-      // Platzhalter-Codes — hier später durch die echten ersetzen!
+      // Platzhalter-Codes â€” hier spÃ¤ter durch die echten ersetzen!
       if (c1 === "1357" && c2 === "2468" && c3 === "3690") {
-        document.getElementById('result').innerHTML = "<span class='success'>✅ Mission erfolgreich! Das Internet läuft wieder. Ab zur Grillparty! 🔥</span>";
+        document.getElementById('result').innerHTML = "<span class='success'>âœ… Mission erfolgreich! Das Internet lÃ¤uft wieder. Ab zur Grillparty! ðŸ”¥</span>";
       } else {
-        document.getElementById('result').innerHTML = "<span class='error'>❌ Falsche Codes – überprüft eure Stationen!</span>";
+        document.getElementById('result').innerHTML = "<span class='error'>âŒ Falsche Codes â€“ Ã¼berprÃ¼ft eure Stationen!</span>";
       }
     }
   </script>
 </body>
 </html>
+
