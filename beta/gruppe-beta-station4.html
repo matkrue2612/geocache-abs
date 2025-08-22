@@ -14,7 +14,6 @@
     .error { color: #c0392b; font-size: .9rem; margin-top: .25rem; display: none; }
     .hidden { display: none; }
   </style>
-
 </head>
 <body>
   <canvas id="matrix"></canvas>
@@ -32,8 +31,8 @@
       </div>
 
       <div class="card">
-        <h3>Hinweis / Rätsel (Platzhalter)</h3>
-        <p>Zwischen den Mauerresten summt ein alter Knotenpunkt. „Stell die richtige Spannung ein“, knistert Dusty Gear.</p>
+        <h3>Hinweis</h3>
+        <p>Zwischen den Mauerresten summt ein alter Knotenpunkt. „Wie viele Türen sind im Durchgang des Turms?“, fragt Dusty Gear.</p>
       </div>
 
       <div class="card">
@@ -49,12 +48,6 @@
         <p id="success" class="small hidden">Richtig! Ihr werdet weitergeleitet…</p>
       </div>
 
-      <div class="card">
-        <h3>Nächster Schritt (Fallback-Link)</h3>
-        <p class="small">Falls die automatische Weiterleitung nicht greift:</p>
-        <a class="btn" href="gruppe-beta-station5.html" id="fallback-link">Weiter zu Station 5</a>
-      </div>
-
       <div class="footer">
         <p>© Geocache Wetzlar · Hacker-Theme · Nur für Bildungszwecke</p>
       </div>
@@ -62,9 +55,10 @@
   </div>
 
   <script>
+    // Prüflogik: richtige Lösung -> Weiterleitung zu Google Maps
     (function () {
-      const CORRECT_NUMBER = 42;  /* <<< HIER richtige Lösung eintragen */
-      const NEXT_URL = document.getElementById('fallback-link').href;
+      const CORRECT_NUMBER = 1; // richtige Lösung
+      const NEXT_URL = "https://www.google.com/maps?q=50.55523869732456,8.503486872611123";
 
       const form = document.getElementById('answer-form');
       const input = document.getElementById('answer');
@@ -79,26 +73,43 @@
         hide(error); hide(success);
 
         const val = Number.parseInt((input.value || '').trim(), 10);
-        if (Number.isNaN(val)) { error.textContent = "Bitte eine Zahl eingeben."; show(error); input.focus(); return; }
+        if (Number.isNaN(val)) {
+          error.textContent = "Bitte eine Zahl eingeben.";
+          show(error); input.focus(); return;
+        }
 
-        if (val === CORRECT_NUMBER) { show(success); setTimeout(() => { window.location.href = NEXT_URL; }, 150); }
-        else { error.textContent = "Falsche Zahl, bitte nochmal versuchen!"; show(error); input.select(); input.focus(); }
+        if (val === CORRECT_NUMBER) {
+          show(success);
+          setTimeout(() => { window.location.href = NEXT_URL; }, 200);
+        } else {
+          error.textContent = "Falsche Zahl, bitte nochmal versuchen!";
+          show(error); input.select(); input.focus();
+        }
       });
     })();
   </script>
 
   <script>
+    // Matrix-Regen im Hintergrund
     (function(){
       const c = document.getElementById('matrix'), x = c.getContext('2d');
       let cols=0, drops=[];
       const g='アカサタナハマヤラワ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
       function resize(){ c.width=innerWidth; c.height=innerHeight; cols=Math.floor(c.width/14); drops=Array(cols).fill(0); }
-      function draw(){ x.fillStyle='rgba(0,0,0,0.08)'; x.fillRect(0,0,c.width,c.height); x.fillStyle='#00ff5e'; x.font='14px monospace';
-        for(let i=0;i<drops.length;i++){ const ch=g[Math.floor(Math.random()*g.length)]; x.fillText(ch, i*14, drops[i]*16);
-          if(drops[i]*16>c.height && Math.random()>0.975) drops[i]=0; drops[i]++; } requestAnimationFrame(draw); }
-      addEventListener('resize', resize); resize(); draw();
+      function draw(){
+        x.fillStyle='rgba(0,0,0,0.08)'; x.fillRect(0,0,c.width,c.height);
+        x.fillStyle='#00ff5e'; x.font='14px monospace';
+        for(let i=0;i<drops.length;i++){
+          const ch=g[Math.floor(Math.random()*g.length)];
+          x.fillText(ch, i*14, drops[i]*16);
+          if(drops[i]*16>c.height && Math.random()>0.975) drops[i]=0;
+          drops[i]++;
+        }
+        requestAnimationFrame(draw);
+      }
+      addEventListener('resize', resize);
+      resize(); draw();
     })();
   </script>
 </body>
 </html>
-

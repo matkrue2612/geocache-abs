@@ -15,7 +15,6 @@
     .error { color: #c0392b; font-size: .9rem; margin-top: .25rem; display: none; }
     .hidden { display: none; }
   </style>
-  
 </head>
 <body>
   <canvas id="matrix"></canvas>
@@ -33,14 +32,10 @@
       </div>
 
       <div class="card">
-        <h3>Hinweis / Rätsel (Platzhalter)</h3>
+        <h3>Hinweis</h3>
         <p>
-          Die großen Mauern stehen noch, aber sie sind voller Risse.
-          Dusty Gear sagt: „Hinter den Steinen ist ein alter Generator. Wir müssen ihn sichern.“
-          In der Asche findest du, was zählt.
+Wie viele Brunnene sind auf dem Domplatz zu sehen? Gebt die Anzhal der Brunnen ein.
         </p>
-        <p class="notice">Tipp: Nutze klare, kurze Sätze. Beispiel:
-          „Zähle die Bögen der Brücke und multipliziere sie mit der Anzahl der Laternen.“</p>
       </div>
 
       <div class="card">
@@ -56,12 +51,6 @@
         <p id="success" class="small hidden">Richtig! Ihr werdet weitergeleitet…</p>
       </div>
 
-      <div class="card">
-        <h3>Nächster Schritt (Fallback-Link)</h3>
-        <p class="small">Falls die automatische Weiterleitung nicht greift:</p>
-        <a class="btn" href="gruppe-beta-station3.html" id="fallback-link">Weiter zu Station 3</a>
-      </div>
-
       <div class="footer">
         <p>© Geocache Wetzlar · Hacker-Theme · Nur für Bildungszwecke</p>
       </div>
@@ -69,9 +58,10 @@
   </div>
 
   <script>
+    // Prüflogik: richtige Lösung -> Weiterleitung zu Google Maps
     (function () {
-      const CORRECT_NUMBER = 42;  /* <<< HIER richtige Lösung eintragen */
-      const NEXT_URL = document.getElementById('fallback-link').href;
+      const CORRECT_NUMBER = 1; // richtige Lösung
+      const NEXT_URL = "https://www.google.com/maps?q=50.557444,8.503306"; // Koordinaten in Dezimalformat
 
       const form = document.getElementById('answer-form');
       const input = document.getElementById('answer');
@@ -95,7 +85,7 @@
 
         if (val === CORRECT_NUMBER) {
           show(success);
-          setTimeout(() => { window.location.href = NEXT_URL; }, 150);
+          setTimeout(() => { window.location.href = NEXT_URL; }, 500);
         } else {
           error.textContent = "Falsche Zahl, bitte nochmal versuchen!";
           show(error); input.select(); input.focus();
@@ -139,4 +129,3 @@
   </script>
 </body>
 </html>
-

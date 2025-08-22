@@ -18,7 +18,6 @@
     .error { color: #c0392b; font-size: .9rem; margin-top: .25rem; display: none; }
     .hidden { display: none; }
   </style>
-  
 </head>
 <body>
   <!-- Matrix-Hintergrund -->
@@ -37,14 +36,8 @@
       </div>
 
       <div class="card">
-        <h3>Hinweis / Rätsel (Platzhalter)</h3>
-        <p>
-          Zwischen den Blumen wachsen alte Metallteile aus der Erde. Dusty Gear sagt:
-          „Hier ist ein versteckter Stromknoten. Hol dir die Energie, bevor sie verloren geht.“
-          In der Asche findest du, was zählt.
-        </p>
-        <p class="notice">Tipp: Nutze klare, kurze Sätze. Beispiel:
-          „Zähle die Bögen der Brücke und multipliziere sie mit der Anzahl der Laternen.“</p>
+        <h3>1. Mission:</h3>
+        <p>Auf der Brücke sind die Fahnen abhanden gekommen. Zählt die Masten, die auf der alten Brücke zu sehen sind.</p>
       </div>
 
       <div class="card">
@@ -60,12 +53,6 @@
         <p id="success" class="small hidden">Richtig! Ihr werdet weitergeleitet…</p>
       </div>
 
-      <div class="card">
-        <h3>Nächster Schritt (Fallback-Link)</h3>
-        <p class="small">Falls die automatische Weiterleitung nicht greift:</p>
-        <a class="btn" href="gruppe-beta-station2.html" id="fallback-link">Weiter zu Station 2</a>
-      </div>
-
       <div class="footer">
         <p>© Geocache Wetzlar · Hacker-Theme · Nur für Bildungszwecke</p>
       </div>
@@ -73,10 +60,10 @@
   </div>
 
   <script>
-    // Prüflogik: richtige Lösung -> weiter zu Station 2
+    // Prüflogik: richtige Lösung -> Weiterleitung zu Google Maps
     (function () {
-      const CORRECT_NUMBER = 42;                        /* <<< HIER eure echte Lösung eintragen */
-      const NEXT_URL = document.getElementById('fallback-link').href; // nimmt exakt den Fallback-Link
+      const CORRECT_NUMBER = 5; // richtige Lösung
+      const NEXT_URL = "https://www.google.com/maps?q=50.55551443417847,8.502100786646222"; // Ziel-Koordinaten
 
       const form = document.getElementById('answer-form');
       const input = document.getElementById('answer');
@@ -99,7 +86,7 @@
 
         if (val === CORRECT_NUMBER) {
           show(success);
-          setTimeout(() => { window.location.href = NEXT_URL; }, 150);
+          setTimeout(() => { window.location.href = NEXT_URL; }, 500);
         } else {
           error.textContent = "Falsche Zahl, bitte nochmal versuchen!";
           show(error); input.select(); input.focus();

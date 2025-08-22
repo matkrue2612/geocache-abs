@@ -10,79 +10,78 @@
     body { margin: 0; }
     .content { position: relative; z-index: 1; }
     #matrix { position: fixed; inset: 0; z-index: -1; pointer-events: none; background: transparent; }
-    .field-row { display: flex; gap: .5rem; align-items: center; flex-wrap: wrap; }
-    .error { color: #c0392b; font-size: .9rem; margin-top: .25rem; display: none; }
-    .hidden { display: none; }
   </style>
-
 </head>
 <body>
   <canvas id="matrix"></canvas>
+
   <div class="content">
     <div class="container">
-      <div class="header"><div class="led"></div><h1>Operation Reconnect</h1></div>
+      <div class="header">
+        <div class="led"></div>
+        <h1>Operation Reconnect</h1>
+      </div>
 
       <div class="card">
-        <h2>Avengers-Netzwerk – Station 1 – Gruppe Gamma</h2>
+        <h2>Fallout-Boten – Station 1 – Gruppe Gamma</h2>
         <p class="small">Gruppe: <span class="code">Gamma</span> &middot; Station: <span class="code">1</span></p>
       </div>
 
       <div class="card">
-        <h3>Hinweis / Rätsel (Platzhalter)</h3>
-        <p>Jarvis: „Ein Knotenpunkt sendet Störsignale. Ermittle den Indexwert, um die Verbindung zu stabilisieren.“</p>
-      </div>
-
-      <div class="card">
-        <h3>Codeeingabe</h3>
-        <form id="answer-form" novalidate>
-          <div class="field-row">
-            <label for="answer" class="small">Bitte Zahl eingeben:</label>
-            <input type="number" id="answer" name="answer" placeholder="XX" inputmode="numeric" required />
-            <button type="submit" class="btn">Absenden</button>
-          </div>
-          <div id="error" class="error">Falsche Zahl, bitte nochmal versuchen!</div>
-        </form>
-        <p id="success" class="small hidden">Richtig! Ihr werdet weitergeleitet…</p>
+        <h3>Hinweis</h3>
+        <p>
+Euer erster Sammelpunkt ist gefunden. Folgt den Spuren, Jarvis begleitet euch.
+Doch bevor ihr weiterzieht: Stellt euch vor das Graffiti. Jarvis sagt:
+„Nur vereint ist die Verbindung stark – macht ein Gruppenbild mit dem Graffiti im Hintergrund.“
+Nutzt den folgenden Link, falls die automatische Weiterleitung nicht greift.
+        </p>
       </div>
 
       <div class="card">
         <h3>Nächster Schritt (Fallback-Link)</h3>
-        <a class="btn" href="gruppe-gamma-station2.html" id="fallback-link">Weiter zu Station 2</a>
+        <a class="btn" href="https://www.google.com/maps?q=50.553889582112845,8.505328437090597" target="_blank">
+          Weiter zu Station 2 (Google Maps)
+        </a>
       </div>
 
-      <div class="footer"><p>© Geocache Wetzlar · Hacker-Theme · Nur für Bildungszwecke</p></div>
+      <div class="footer">
+        <p>© Geocache Wetzlar · Hacker-Theme · Nur für Bildungszwecke</p>
+      </div>
     </div>
   </div>
 
   <script>
-    (function () {
-      const CORRECT_NUMBER = 42; /* <<< HIER Lösung eintragen */
-      const NEXT_URL = document.getElementById('fallback-link').href;
-      const form = document.getElementById('answer-form');
-      const input = document.getElementById('answer');
-      const err = document.getElementById('error');
-      const ok = document.getElementById('success');
-      const show = el => el && (el.style.display=''); const hide = el => el && (el.style.display='none');
-      form.addEventListener('submit', e=>{
-        e.preventDefault(); hide(err); hide(ok);
-        const n = parseInt((input.value||'').trim(),10);
-        if (Number.isNaN(n)) { err.textContent="Bitte eine Zahl eingeben."; show(err); input.focus(); return; }
-        if (n===CORRECT_NUMBER){ show(ok); setTimeout(()=>location.href=NEXT_URL,150); }
-        else { err.textContent="Falsche Zahl, bitte nochmal versuchen!"; show(err); input.select(); input.focus(); }
-      });
-    })();
-  </script>
-  <script>
+    // Matrix-Regen im Hintergrund
     (function(){
-      const c=document.getElementById('matrix'),x=c.getContext('2d');let cols=0,drops=[];
-      const g='アカサタナハマヤラワ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-      function resize(){ c.width=innerWidth; c.height=innerHeight; cols=Math.floor(c.width/14); drops=Array(cols).fill(0); }
-      function draw(){ x.fillStyle='rgba(0,0,0,0.08)'; x.fillRect(0,0,c.width,c.height); x.fillStyle='#00ff5e'; x.font='14px monospace';
-        for(let i=0;i<drops.length;i++){ const ch=g[Math.floor(Math.random()*g.length)]; x.fillText(ch,i*14,drops[i]*16);
-          if(drops[i]*16>c.height && Math.random()>0.975) drops[i]=0; drops[i]++; } requestAnimationFrame(draw); }
-      addEventListener('resize', resize); resize(); draw();
+      const canvas = document.getElementById('matrix');
+      const ctx = canvas.getContext('2d');
+      let cols = 0, drops = [];
+      const glyphs = 'アカサタナハマヤラワ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+      function resize(){
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        cols = Math.floor(canvas.width / 14);
+        drops = Array(cols).fill(0);
+      }
+
+      function draw(){
+        ctx.fillStyle = 'rgba(0,0,0,0.08)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#00ff5e';
+        ctx.font = '14px monospace';
+        for (let i = 0; i < drops.length; i++) {
+          const ch = glyphs[Math.floor(Math.random() * glyphs.length)];
+          ctx.fillText(ch, i * 14, drops[i] * 16);
+          if (drops[i] * 16 > canvas.height && Math.random() > 0.975) drops[i] = 0;
+          drops[i]++;
+        }
+        requestAnimationFrame(draw);
+      }
+
+      window.addEventListener('resize', resize);
+      resize(); draw();
     })();
   </script>
 </body>
 </html>
-

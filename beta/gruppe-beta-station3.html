@@ -11,11 +11,7 @@
     body { margin: 0; }
     .content { position: relative; z-index: 1; }
     #matrix { position: fixed; inset: 0; z-index: -1; pointer-events: none; background: transparent; }
-    .field-row { display: flex; gap: .5rem; align-items: center; flex-wrap: wrap; }
-    .error { color: #c0392b; font-size: .9rem; margin-top: .25rem; display: none; }
-    .hidden { display: none; }
   </style>
-  
 </head>
 <body>
   <!-- Matrix-Hintergrund -->
@@ -34,32 +30,21 @@
       </div>
 
       <div class="card">
-        <h3>Hinweis / Rätsel (Platzhalter)</h3>
+        <h3>3. Mission: Grimassenbilder</h3>
         <p>
-          Die alten Datenleitungen sind tief vergraben. Dusty Gear flüstert:
-          „Hör den Strom – er verrät das Muster. Finde die Zahl, bevor die Leitung endgültig bricht.“
+          Die Schatten werden länger, doch wir brauchen Licht.  
+          Dusty Gear sagt: „Zeigt den Widerstand! Jeder von euch soll eine Grimasse ziehen – das Chaos ins Bild bannen.“  
+          Nur wenn alle Fratzen erfasst sind, wird der Weg zum nächsten Ziel sichtbar.
         </p>
-        <p class="notice">Tipp: Nutze klare, kurze Sätze. Beispiel:
-          „Zähle die Markierungen und addiere die sichtbaren Kabelschächte.“</p>
+        <p class="notice">Tipp: Achtet darauf, dass <em>alle</em> Gruppenmitglieder auf einem oder mehreren Fotos erfasst sind.</p>
       </div>
 
       <div class="card">
-        <h3>Codeeingabe</h3>
-        <form id="answer-form" novalidate>
-          <div class="field-row">
-            <label for="answer" class="small">Bitte Zahl eingeben:</label>
-            <input type="number" id="answer" name="answer" placeholder="XX" inputmode="numeric" required />
-            <button type="submit" class="btn">Absenden</button>
-          </div>
-          <div id="error" class="error">Falsche Zahl, bitte nochmal versuchen!</div>
-        </form>
-        <p id="success" class="small hidden">Richtig! Ihr werdet weitergeleitet…</p>
-      </div>
-
-      <div class="card">
-        <h3>Nächster Schritt (Fallback-Link)</h3>
-        <p class="small">Falls die automatische Weiterleitung nicht greift:</p>
-        <a class="btn" href="gruppe-beta-station4.html" id="fallback-link">Weiter zu Station 4</a>
+        <h3>Nächster Schritt</h3>
+        <p>Folgt den Koordinaten zum nächsten Ziel:</p>
+        <a class="btn" href="https://www.google.com/maps?q=50.553778,8.504500" target="_blank">
+          Weiter zu Station 4
+        </a>
       </div>
 
       <div class="footer">
@@ -67,43 +52,6 @@
       </div>
     </div>
   </div>
-
-  <script>
-    // Prüflogik: richtige Lösung -> weiter zu Station 4
-    (function () {
-      const CORRECT_NUMBER = 42;  /* <<< HIER eure echte Lösung eintragen */
-      const NEXT_URL = document.getElementById('fallback-link').href;
-
-      const form = document.getElementById('answer-form');
-      const input = document.getElementById('answer');
-      const error = document.getElementById('error');
-      const success = document.getElementById('success');
-
-      const show = el => el && (el.style.display = '');
-      const hide = el => el && (el.style.display = 'none');
-
-      form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        hide(error); hide(success);
-
-        const raw = (input.value || '').trim();
-        const val = Number.parseInt(raw, 10);
-
-        if (Number.isNaN(val)) {
-          error.textContent = "Bitte eine Zahl eingeben.";
-          show(error); input.focus(); return;
-        }
-
-        if (val === CORRECT_NUMBER) {
-          show(success);
-          setTimeout(() => { window.location.href = NEXT_URL; }, 150);
-        } else {
-          error.textContent = "Falsche Zahl, bitte nochmal versuchen!";
-          show(error); input.select(); input.focus();
-        }
-      });
-    })();
-  </script>
 
   <script>
     // Matrix-Regen im Hintergrund
@@ -140,4 +88,5 @@
   </script>
 </body>
 </html>
+
 
