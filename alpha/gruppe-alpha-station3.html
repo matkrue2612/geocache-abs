@@ -14,7 +14,6 @@
     .error { color: #c0392b; font-size: .9rem; margin-top: .25rem; display: none; }
     .hidden { display: none; }
   </style>
- 
 </head>
 <body>
   <canvas id="matrix"></canvas>
@@ -32,10 +31,10 @@
       </div>
 
       <div class="card">
-        <h3>Hinweis / Rätsel (Platzhalter)</h3>
+        <h3>Hinweis / Rätsel</h3>
         <p>Unter der Brücke laufen geheime Datenleitungen. Morpheus sagt:
-          „Höre den Datenverkehr ab. So finden wir das Muster vom Virus.“ Zugang ist Macht.</p>
-        <p class="notice">Tipp: "Zähle die Bögen der Brücke und multipliziere sie mit der Anzahl der Laternen."</p>
+          „Höre den Datenverkehr ab. So finden wir das Muster vom Virus.“ </p>
+        <p class="notice">Tipp: "Zähle die Bögen der Brücke und tippe sie in das Eingabefeld"</p>
       </div>
 
       <div class="card">
@@ -48,13 +47,7 @@
           </div>
           <div id="error" class="error">Falsche Zahl, bitte nochmal versuchen!</div>
         </form>
-        <p id="success" class="small hidden">Richtig! Ihr werdet weitergeleitet…</p>
-      </div>
-
-      <div class="card">
-        <h3>Nächster Schritt (Fallback-Link)</h3>
-        <p class="small">Falls die automatische Weiterleitung nicht greift:</p>
-        <a class="btn" href="gruppe-alpha-station4.html" id="fallback-link">Weiter zur Station 4</a>
+        <p id="success" class="small hidden">Richtig! Ihr werdet zu Google Maps weitergeleitet…</p>
       </div>
 
       <div class="footer">
@@ -63,10 +56,12 @@
     </div>
   </div>
 
+  <!-- Eingabeprüfung und Weiterleitung -->
   <script>
     (function () {
-      const CORRECT_NUMBER = 42;                     // <<< HIER richtige Lösung eintragen
-      const NEXT_URL = "gruppe-alpha-station4.html"; // <<< Ziel prüfen/anpassen
+      const CORRECT_NUMBER = 7;  
+      const NEXT_URL = "https://www.google.com/maps?q=50.55370452584922, 8.505380057704361";
+
 
       const form = document.getElementById('answer-form');
       const input = document.getElementById('answer');
@@ -92,7 +87,9 @@
 
         if (n === CORRECT_NUMBER) {
           show(success);
-          setTimeout(() => { window.location.href = NEXT_URL; }, 150);
+          setTimeout(() => { 
+            window.open(NEXT_URL, "_blank"); 
+          }, 300);
         } else {
           error.textContent = "Falsche Zahl, bitte nochmal versuchen!";
           show(error);
@@ -102,6 +99,7 @@
     })();
   </script>
 
+  <!-- Matrix-Regen im Hintergrund -->
   <script>
     (function(){
       const canvas = document.getElementById('matrix'), ctx = canvas.getContext('2d');
@@ -125,7 +123,4 @@
   </script>
 </body>
 </html>
-
-
-
 

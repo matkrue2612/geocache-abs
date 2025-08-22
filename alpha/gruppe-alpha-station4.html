@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Station 4 - Gruppe Alpha</title>
+  <title>Grenzsteinlapidarium - Gruppe Alpha</title>
   <link rel="stylesheet" href="../style-alpha.css" />
   <link rel="stylesheet" href="style.css" />
   <style>
@@ -12,13 +12,11 @@
     .content { position: relative; z-index: 1; }
     /* Canvas im Hintergrund, nimmt keine Klicks */
     #matrix { position: fixed; inset: 0; z-index: -1; pointer-events: none; background: transparent; }
-
     /* kleine UX-Details */
     .field-row { display: flex; gap: .5rem; align-items: center; flex-wrap: wrap; }
     .error { color: #c0392b; font-size: .9rem; margin-top: .25rem; display: none; }
     .hidden { display: none; }
   </style>
- 
 </head>
 <body>
   <canvas id="matrix"></canvas>
@@ -36,11 +34,9 @@
       </div>
 
       <div class="card">
-        <h3>Hinweis / Rätsel (Platzhalter)</h3>
-        <p>Zwischen den Steinen des Doms gibt es einen versteckten Computer. Morpheus sagt:
-          „Das ist ein wichtiger Punkt. Wir müssen hineinkommen.“ Zugang ist Macht.</p>
-        <p class="notice">Tipp: Nutze klare, kurze Sätze. Beispiel:
-          „Zähle die Bögen der Brücke und multipliziere sie mit der Anzahl der Laternen.“</p>
+        <h3>Rätsel</h3>
+        <p>Am Zielpunkt steht das Grenzstein-Lapidarium. <strong>Wie viele Grenzsteine sind dort beschriftet?</strong></p>
+        <p class="small">Tragt die Zahl unten ein.</p>
       </div>
 
       <div class="card">
@@ -48,19 +44,20 @@
         <form id="answer-form" novalidate>
           <div class="field-row">
             <label for="answer" class="small">Bitte Zahl eingeben:</label>
-            <input type="number" id="answer" name="answer" placeholder="XX" inputmode="numeric" required />
+            <input type="number" id="answer" name="answer" placeholder="?" inputmode="numeric" min="0" required />
             <button type="submit" class="btn">Absenden</button>
           </div>
           <div id="error" class="error">Falsche Zahl, bitte nochmal versuchen!</div>
         </form>
-        <p id="success" class="small hidden">Richtig! Ihr werdet weitergeleitet…</p>
+        <p id="success" class="small hidden">Richtig! Kartenlink wird geöffnet…</p>
       </div>
 
+      <!-- Optional: Fallback-Link zur nächsten Station, falls ihr nach dem Ort direkt weiter wollt
       <div class="card">
-        <h3>Nächster Schritt (Fallback-Link)</h3>
-        <p class="small">Falls die automatische Weiterleitung nicht greift:</p>
-        <a class="btn" href="gruppe-alpha-station5.html" id="fallback-link">Weiter zur Station 5</a>
+        <h3>Nächster Schritt (Fallback)</h3>
+        <a class="btn" href="gruppe-alpha-station5.html">Weiter zur Station 5</a>
       </div>
+      -->
 
       <div class="footer">
         <p>© Geocache Wetzlar · Hacker-Theme · Nur für Bildungszwecke</p>
@@ -68,11 +65,11 @@
     </div>
   </div>
 
+  <!-- Prüflogik: 8 = korrekt → Google Maps mit Zielkoordinaten -->
   <script>
-    // Prüflogik
     (function () {
-      const CORRECT_NUMBER = 42;                       // <<< HIER richtige Lösung eintragen
-      const NEXT_URL = "gruppe-alpha-station5.html";   // <<< Ziel prüfen/anpassen
+      const CORRECT_NUMBER = 8;
+      const NEXT_URL = "https://www.google.com/maps?q=50.55528121382444,8.503473700719008";
 
       const form = document.getElementById('answer-form');
       const input = document.getElementById('answer');
@@ -86,30 +83,25 @@
         e.preventDefault();
         hide(error); hide(success);
 
-        const raw = (input.value || '').trim();
-        const val = Number.parseInt(raw, 10);
-
+        const val = Number.parseInt((input.value || '').trim(), 10);
         if (Number.isNaN(val)) {
           error.textContent = "Bitte eine Zahl eingeben.";
-          show(error);
-          input.focus();
-          return;
+          show(error); input.focus(); return;
         }
 
         if (val === CORRECT_NUMBER) {
           show(success);
-          setTimeout(() => { window.location.href = NEXT_URL; }, 150);
+          setTimeout(() => { window.open(NEXT_URL, "_blank"); }, 200);
         } else {
           error.textContent = "Falsche Zahl, bitte nochmal versuchen!";
-          show(error);
-          input.select(); input.focus();
+          show(error); input.select(); input.focus();
         }
       });
     })();
   </script>
 
+  <!-- Matrix-Regen im Hintergrund -->
   <script>
-    // Matrix-Regen im Hintergrund
     (function(){
       const canvas = document.getElementById('matrix');
       const ctx = canvas.getContext('2d');
@@ -144,7 +136,5 @@
   </script>
 </body>
 </html>
-
-
 
 

@@ -8,12 +8,13 @@
   <link rel="stylesheet" href="style.css" />
   <style>
     body { margin: 0; }
-    /* Content sicher über dem Canvas platzieren */
     .content { position: relative; z-index: 1; }
-    /* Canvas liegt hinter dem Content und blockiert keine Klicks */
     #matrix { position: fixed; inset: 0; z-index: -1; pointer-events: none; background: transparent; }
+    .hidden { display: none; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+    .code { background: rgba(0,0,0,0.07); padding: 0.1rem 0.3rem; border-radius: 0.25rem; }
+    .btn { display:inline-block; padding:0.6rem 1rem; text-decoration:none; border-radius:0.5rem; }
   </style>
- 
 </head>
 <body>
   <canvas id="matrix"></canvas>
@@ -22,20 +23,19 @@
     <div class="container">
       <div class="header">
         <div class="led"></div>
-        <h1>Crew der Nebuchadnezzar – Station 1</h1>
+        <h1>Crew der Nebuchadnezzar – Dom</h1>
       </div>
 
       <div class="card">
-        <h2>50.555769689207494, 8.502021730798715 – Gruppe Alpha</h2>
+        <h2>Dom – Gruppe Alpha</h2>
         <p class="small">Gruppe: <span class="code">Alpha</span> &middot; Station: <span class="code">1</span></p>
       </div>
 
       <div class="card">
-        <h3>Hinweis / Rätsel (Platzhalter)</h3>
+        <h3>Betreff: Die Straße der Hoffnung</h3>
         <p>
-          Die Lampen im Rathaus blinken. Es sieht aus, als würde etwas den Computer-Code verändern.
-          Morpheus sagt: „Hier ist ein wichtiger Server. Hol dir die Daten, bevor der Virus sie löscht.“
-          Zugang ist Macht.
+          Morpheus hier – wichtiger Knotenpunkt. Wir suchen die Straße der Hoffnung. <br />
+          <strong>Nenne die Anzahl der Wegweiser.</strong>
         </p>
       </div>
 
@@ -46,15 +46,21 @@
           <input type="number" id="group-number" placeholder="XX" inputmode="numeric" />
           <button id="submit-number" type="button">Absenden</button>
         </p>
-        <p class="small mono">Hinweis: Die richtige Zahl führt euch automatisch weiter.</p>
+        <p class="small mono">Hinweis: Die richtige Zahl schaltet die Koordinaten von Station&nbsp;2 frei.</p>
       </div>
 
-      <div class="card">
-        <h3>Nächster Schritt</h3>
-        <p>Scanne den nächsten QR-Code oder rufe den nächsten Link auf, wenn ihr das Codefragment gefunden habt.</p>
-        <a class="btn" href="gruppe-alpha-station2.html">Weiter zur Station 2</a>
-        <p class="small">Passe den Button-Link oben an, sobald die finale Reihenfolge feststeht.</p>
-      </div>
+      <!-- Freischaltung: Koordinaten für Station 2 -->
+      <div id="reveal-card" class="card hidden">
+        <h3>Entschlüsselung erfolgreich</h3>
+        <p>Die Firewall hat euch erkannt. Station&nbsp;2 befindet sich hier:</p>
+        <p class="mono" id="coords">50.55738567039907, 8.503263899779771</p>
+        <p>
+          <a id="gmaps-link" class="btn" target="_blank" rel="noopener"
+             href="https://www.google.com/maps?q=50.55738567039907,8.503263899779771">
+            In Google Maps öffnen
+          </a>
+        </p>
+
 
       <div class="footer">
         <p>© Geocache Wetzlar · Hacker-Theme · Nur für Bildungszwecke</p>
@@ -63,11 +69,28 @@
   </div>
 
   <script>
-    // Zahl prüfen und ggf. weiterleiten
+    // Zahl prüfen und Koordinaten freischalten
     (function () {
       const input = document.getElementById('group-number');
       const btn = document.getElementById('submit-number');
-      const correctNumber = 42; // <- hier die richtige Zahl eintragen
+
+      // ✅ Richtige Lösung ist jetzt 12
+      const correctNumber = 12;
+
+      // Konstanten für Station 2
+      const lat = 50.55738567039907;
+      const lng = 8.503263899779771;
+      const revealCard = document.getElementById('reveal-card');
+      const coordsEl = document.getElementById('coords');
+      const linkEl = document.getElementById('gmaps-link');
+
+      function showCoords() {
+        // Text & Link setzen (falls du die Werte später zentral ändern willst)
+        coordsEl.textContent = `${lat}, ${lng}`;
+        linkEl.href = `https://www.google.com/maps?q=${lat},${lng}`;
+        // Karte sichtbar machen
+        revealCard.classList.remove('hidden');
+      }
 
       function checkAnswer() {
         const raw = (input.value || '').trim();
@@ -77,7 +100,7 @@
           return;
         }
         if (n === correctNumber) {
-          window.location.href = "gruppe-alpha-station2.html"; // Ziel anpassen, falls nötig
+          showCoords(); // 🔓 Koordinaten anzeigen
         } else {
           alert("Falsche Zahl, bitte nochmal versuchen!");
         }
@@ -126,8 +149,3 @@
   </script>
 </body>
 </html>
-
-
-
-
-

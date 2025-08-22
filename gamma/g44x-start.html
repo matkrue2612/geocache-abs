@@ -14,14 +14,7 @@
     /* Matrix im Hintergrund, blockiert keine Klicks */
     #matrix { position: fixed; inset: 0; z-index: -1; pointer-events: none; background: transparent; }
   </style>
-  <script>
-    // Zugangsgate für Gamma
-    (function(){
-      if (sessionStorage.getItem("gamma_ok") !== "1") {
-        location.replace("../index.html");
-      }
-    })();
-  </script>
+
 </head>
 <body>
   <!-- Matrix-Hintergrund -->

@@ -8,17 +8,9 @@
   <link rel="stylesheet" href="style.css" />
   <style>
     body { margin: 0; }
-    /* Content sicher über Canvas */
     .content { position: relative; z-index: 1; }
-    /* Canvas im Hintergrund, nicht klickbar */
     #matrix { position: fixed; inset: 0; z-index: -1; pointer-events: none; background: transparent; }
-
-    /* UX für Eingabe */
-    .field-row { display: flex; gap: .5rem; align-items: center; flex-wrap: wrap; }
-    .error { color: #c0392b; font-size: .9rem; margin-top: .25rem; display: none; }
-    .hidden { display: none; }
   </style>
-
 </head>
 <body>
   <canvas id="matrix"></canvas>
@@ -34,33 +26,14 @@
         <h2>Station 5 – Gruppe Alpha</h2>
         <p class="small">Gruppe: <span class="code">Alpha</span> &middot; Station: <span class="code">5</span></p>
       </div>
-
+<div class="card"> <h3>Betreff: Gruppenbild mit Goethe</h3> <p>Morpheus textet: Gruppenbilder vor Graffitiwänden aktivieren den alten Goethe. Bei Zusendung mehrerer Gruppenbilder aktiviert sich unser aller Zugang und wir haben es so gut wie geschafft!</p>
       <div class="card">
-        <h3>Hinweis / Rätsel (Platzhalter)</h3>
-        <p>…hier steht euer Rätseltext…</p>
-      </div>
-
-      <div class="card">
-        <h3>Codeeingabe</h3>
-        <form id="answer-form" novalidate>
-          <div class="field-row">
-            <label for="answer" class="small">Bitte Zahl eingeben:</label>
-            <input type="number" id="answer" name="answer" placeholder="XX" inputmode="numeric" required />
-            <button type="submit" class="btn">Absenden</button>
-          </div>
-          <div id="error" class="error">Falsche Zahl, bitte nochmal versuchen!</div>
-        </form>
-        <p id="success" class="small hidden">Richtig! Ihr werdet weitergeleitet…</p>
-      </div>
-
-      <div class="card">
-        <h3>Finale (Fallback-Link)</h3>
-        <p class="small">Falls die automatische Weiterleitung nicht greift:</p>
-        <!-- Variante A: relativer Link (empfohlen, wenn Seiten im selben Projekt liegen) -->
-        <a class="btn" href="finale.html" id="fallback-link">Zum Finale</a>
-        <!-- Oder Variante B (file://) manuell:
-        <a class="btn" href="file:///C:/Users/matth/Desktop/geocache_site/HTML-Seiten/finale.html">Zum Finale (file://)</a>
-        -->
+        <h3>Weiter zum Zielort</h3>
+        <p>
+          <a href="https://www.google.com/maps?q=50.575442660890154,8.51313714249321" target="_blank">
+            Weiter zu Station 5
+          </a>
+        </p>
       </div>
 
       <div class="footer">
@@ -69,52 +42,8 @@
     </div>
   </div>
 
+  <!-- Matrix-Regen im Hintergrund -->
   <script>
-    (function () {
-      const CORRECT_NUMBER = 42; // <<< HIER richtige Lösung eintragen
-
-      // --- Ziel wählen ---
-      // Variante A (empfohlen): relativer Pfad im Projekt
-      const NEXT_URL = "finale.html";
-      // Variante B (funktioniert nur zuverlässig bei file://-Aufruf der Seite)
-      // const NEXT_URL = "file:///C:/Users/matth/Desktop/geocache_site/HTML-Seiten/finale.html";
-
-      const form = document.getElementById('answer-form');
-      const input = document.getElementById('answer');
-      const error = document.getElementById('error');
-      const success = document.getElementById('success');
-
-      const show = el => el.style.display = '';
-      const hide = el => el.style.display = 'none';
-
-      form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        hide(error); hide(success);
-
-        const raw = (input.value || '').trim();
-        const val = Number.parseInt(raw, 10);
-
-        if (Number.isNaN(val)) {
-          error.textContent = "Bitte eine Zahl eingeben.";
-          show(error);
-          input.focus();
-          return;
-        }
-
-        if (val === CORRECT_NUMBER) {
-          show(success);
-          setTimeout(() => { window.location.href = NEXT_URL; }, 150);
-        } else {
-          error.textContent = "Falsche Zahl, bitte nochmal versuchen!";
-          show(error);
-          input.select(); input.focus();
-        }
-      });
-    })();
-  </script>
-
-  <script>
-    // Matrix-Regen im Hintergrund
     (function(){
       const canvas = document.getElementById('matrix');
       const ctx = canvas.getContext('2d');
@@ -148,7 +77,3 @@
   </script>
 </body>
 </html>
-
-
-
-
